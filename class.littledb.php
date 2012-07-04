@@ -1,4 +1,4 @@
-<?php defined('CRDK') or exit('No tienes Permitido el acceso.');
+<?php
 
 class LittleDB
  {
@@ -37,6 +37,7 @@ class LittleDB
     $this->user = $user;
     $this->pass = $pass;
     $this->db = $db;
+    $this->logger = $logger;
    } // public function __construct();
 
 
