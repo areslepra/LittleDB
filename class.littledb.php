@@ -37,6 +37,7 @@ class LittleDB
     $this->user = $user;
     $this->pass = $pass;
     $this->db = $db;
+    $this->logger = $logger;
    } // public function __construct();
 
 
