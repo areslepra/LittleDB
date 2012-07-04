@@ -1,5 +1,7 @@
 <?php
-
+/* *****************************************************************************
+ ***                           Clase LittleDB 1.8                            ***
+ **************************************************************************** */
 class LittleDB
  {
   // Devuelve el objeto db
@@ -181,7 +183,7 @@ class LittleDB
      {
       $fields = implode(', ', array_keys($array));
       $values = $this->parse_input($array);
-      $query = $this->_query('INSERT INTO '.$this->db.'.'.$this->prefix.$table.' ( '.$fields.' ) VALUES ( '.$values.' )');
+      $query = $this->_query('INSERT INTO `'.$this->db.'`.`'.$this->prefix.$table.'` ( '.$fields.' ) VALUES ( '.$values.' )');
 
       // Seteamos el resultado,
       if($return == true) { return mysql_insert_id($this->conn); }
@@ -214,7 +216,7 @@ class LittleDB
         $where[] = $key.' = '.$this->parse_input($value);
        }
       $conditions = implode(' && ', $where);
-      $query = $this->_query('DELETE FROM '.$this->db.'.'.$this->prefix.$table.' WHERE '.$conditions);
+      $query = $this->_query('DELETE FROM `'.$this->db.'`.`'.$this->prefix.$table.'` WHERE '.$conditions);
       if($return == true) { return mysql_affected_rows($this->conn); }
       else
        {
@@ -246,7 +248,7 @@ class LittleDB
       $wher = array();
       foreach($cond as $field => $value) { $wher[] = $field.' = '.$this->parse_input($value); }
       $where = implode(' && ', $wher);
-      $query = $this->_query('UPDATE '.$this->db.'.'.$this->prefix.$table.' SET '.$fields.' WHERE '.$where);
+      $query = $this->_query('UPDATE `'.$this->db.'`.`'.$this->prefix.$table.'` SET '.$fields.' WHERE '.$where);
       if($return == true) { return mysql_affected_rows($this->conn); }
       else
        {
