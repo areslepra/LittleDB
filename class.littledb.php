@@ -320,20 +320,9 @@ class LittleDB
   */
   protected function parse_input($object)
    {
-    if(is_object($object))
-     { //Es un objeto?
-      return (string)$object;
-     }
-    elseif(is_numeric($object))
-     { //Es un número?
-      if(is_int($object)) { return $object; }
-      if (((int) $object) == $object) { return (int) $object; }
-      return (float)$object;
-     }
-    elseif($object === NULL)
-     { //Es NULL?
-      return 'NULL';
-     }
+    if(is_object($object)) { return (string) $object; } //Es un objeto?
+    elseif(is_int($object)) { return (int) $object; } // Es un número?
+    elseif($object === NULL) { return 'NULL'; } // Es nulo?
     elseif(is_array($object))
      { //Es un arreglo?
       $object = array_map(array($this, 'parse_input'), $object);
