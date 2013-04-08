@@ -16,7 +16,7 @@ class LittleDB
   // Usuario del Servidor
   protected $user = null;
 
-  // Contraseña del Servidor
+  // ContraseÃ±a del Servidor
   protected $pass = '';
 
   // Nombre de la Base de datos
@@ -37,9 +37,9 @@ class LittleDB
    * Constructor de la clase
    * @param string $host Url o DNS del Servidor MySQL
    * @param string $user Usuario del servidor
-   * @param string &pass Contraseña del servidor
+   * @param string &pass ContraseÃ±a del servidor
    * @param string $db Nombre de la base de datos
-   * @param array $logger Función para el registro de datos
+   * @param array $logger FunciÃ³n para el registro de datos
    * @author Cody Roodaka <roodakazo@hotmail.com>
    */
   public function __construct($host, $user, $pass, $db, $logger = null)
@@ -103,7 +103,7 @@ class LittleDB
    */
   public function connect()
    {
-    if($this->is_connected() == false)
+    if($this->is_connected() === false)
      {
       $this->conn = mysqli_connect($this->host, $this->user, $this->pass, $this->db) or exit('No se ha podido conectar al servidor.');
      }
@@ -112,7 +112,7 @@ class LittleDB
 
 
   /**
-   * Checkear si está conectado al servidor
+   * Checkear si estÃ¡ conectado al servidor
    * @author Cody Roodaka <roodakazo@hotmail.com>
    */
   private function is_connected()
@@ -132,15 +132,16 @@ class LittleDB
    */
   public function query($cons, $values = null, $ret = false)
    {
-    if($this->is_connected() == true)
+    if($this->is_connected() == true) // Chequeamos que estÃ© conectado
      {
-      if($values != null)
+      if($values != null) // Si tenemos valores para parsear
        {
+        // Si no es un arreglo lo convertimos
         if(!is_array($values)) { $values = array($values); }
         $query = $this->parse_vars($cons, $values);
        }
       else { $query = $cons; }
-      if($ret == true)
+      if($ret == true) // Si debemos retornar el resultado...
        {
         $res = $this->_query($query);
         if($res->num_rows !== 0)
@@ -240,7 +241,10 @@ class LittleDB
        }
       $fields = implode(', ', $fiel);
       $wher = array();
-      foreach($cond as $field => $value) { $wher[] = $field.' = '.$this->parse_input($value); }
+      foreach($cond as $field => $value)
+       {
+        $wher[] = $field.' = '.$this->parse_input($value);
+       }
       $where = implode(' && ', $wher);
       $query = $this->_query('UPDATE '.$this->db.'.'.$this->prefix.$table.' SET '.$fields.' WHERE '.$where);
       if($return == true) { return $this->conn->affected_rows; }
@@ -289,17 +293,10 @@ class LittleDB
    */
   protected function parse_vars($q, $params)
    {
-    //Validamos que los parametros sea un arreglo.
-    if(!is_array($params))
-     {
-      throw new Exception('El parametro debe ser un arreglo válido');
-      return $q;
-     }
     //Validamos que tengamos igual numero de parametros que de los necesarios.
     if(count($params) != preg_match_all("/\?/", $q, $aux))
      {
       throw new Exception('No coinciden la cantidad de parametros necesarios con los provistos en '.$q);
-      return $q;
      }
     //Reemplazamos las etiquetas.
     foreach($params as $param)
@@ -311,8 +308,8 @@ class LittleDB
 
 
   /**
-   * Función que se encarga de determinar el tipo de datos para ver si debe
-   * aplicar la prevención de inyecciones SQL, si debe usar comillas o si es
+   * FunciÃ³n que se encarga de determinar el tipo de datos para ver si debe
+   * aplicar la prevenciÃ³n de inyecciones SQL, si debe usar comillas o si es
    * un literal ( funcion SQL ).
    * @param mixed $objet Objeto a analizar.
    * @return string Cadena segura.
@@ -321,7 +318,7 @@ class LittleDB
   protected function parse_input($object)
    {
     if(is_object($object)) { return (string) $object; } //Es un objeto?
-    elseif(is_int($object)) { return (int) $object; } // Es un número?
+    elseif(is_int($object)) { return (int) $object; } // Es un nÃºmero?
     elseif($object === NULL) { return 'NULL'; } // Es nulo?
     elseif(is_array($object))
      { //Es un arreglo?
@@ -349,7 +346,7 @@ class Query
   /**
    * Inicializar los datos
    * @param $query Consulta SQL
-   * @param $conn Recurso de conección SQL
+   * @param $conn Recurso de conecciÃ³n SQL
    * @author Cody Roodaka <roodakazo@hotmail.com>
    */
   public function __construct($query, $conn)
@@ -384,7 +381,7 @@ class Query
 
 
   /**
-   * Obtenemos una columna específica de una consulta
+   * Obtenemos una columna especÃ­fica de una consulta
    * @param string $field Columna seleccionada
    * @param string $default Resultado por defecto
    * @return string Resultado
