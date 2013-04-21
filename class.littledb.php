@@ -1,6 +1,6 @@
 <?php
 /* *****************************************************************************
- ***                           Clase LittleDB 2.1                            ***
+ ***                           Clase LittleDB 2.3                            ***
  **************************************************************************** */
 class LittleDB
  {
@@ -169,7 +169,7 @@ class LittleDB
    * @param array Arreglo con los campos y valores; 'campo' => 'valor'
    * @param return Retornar o no el ID del insert.
    * @author Cody Roodaka <roodakazo@hotmail.com>
-   * @return int|array
+   * @return int|boolean
    */
   public function insert($table, $array, $return = false)
    {
@@ -180,7 +180,7 @@ class LittleDB
       $query = $this->_query('INSERT INTO '.$this->db.'.'.$this->prefix.$table.' ( '.$fields.' ) VALUES ( '.$values.' )');
 
       // Seteamos el resultado,
-      if($return == true) { return $this->conn->insert_id; }
+      if($return == true) { return (int) $this->conn->insert_id; }
       else
        {
         if(!$query || $query == false) { return false; }
@@ -199,6 +199,7 @@ class LittleDB
    * @param where  Condicionantes
    * @param return Retornar nro de filas afectadas
    * @author Cody Roodaka <roodakazo@hotmail.com>
+   * @return boolean
    */
   public function delete($table, $cond = array(), $return = false)
    {
@@ -211,7 +212,7 @@ class LittleDB
        }
       $conditions = implode(' && ', $where);
       $query = $this->_query('DELETE FROM '.$this->db.'.'.$this->prefix.$table.' WHERE '.$conditions);
-      if($return == true) { return $this->conn->affected_rows; }
+      if($return == true) { return (int) $this->conn->affected_rows; }
       else
        {
         if(!$query || $query == false) { return false; }
@@ -229,6 +230,7 @@ class LittleDB
    * @param return Retornar nro de filas afectadas
    * @return mixed Resultado
    * @author Cody Roodaka <roodakazo@hotmail.com>
+   * @return int|boolean
    */
   public function update($table, $array = array(), $cond = array(), $return = false)
    {
@@ -247,7 +249,7 @@ class LittleDB
        }
       $where = implode(' && ', $wher);
       $query = $this->_query('UPDATE '.$this->db.'.'.$this->prefix.$table.' SET '.$fields.' WHERE '.$where);
-      if($return == true) { return $this->conn->affected_rows; }
+      if($return == true) { return (int) $this->conn->affected_rows; }
       else
        {
         if(!$query || $query == false) { return false; }
