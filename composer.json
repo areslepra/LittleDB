@@ -1,0 +1,17 @@
+{
+    "name": "roodaka/little-db",
+    "description": "LittleDB",
+    "type": "library",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Cody Roodaka",
+            "email": "roodakazo@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "classmap": ["class.littledb.php"]
+    }
+}
